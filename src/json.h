@@ -92,3 +92,8 @@ class SIMPLY_JSON_EXPORT JsonParser
     std::string::iterator _it, _end;
     int _depth;
 };
+
+template <typename T> std::optional<JsonParser::Value> parse_json(T &&source)
+{
+    return JsonParser(std::forward<T>(source)).json();
+}
