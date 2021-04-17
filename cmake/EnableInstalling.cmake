@@ -1,0 +1,33 @@
+
+include(GNUInstallDirs)
+
+install(TARGETS ${PROJECT_NAME}
+  EXPORT ${PROJECT_NAME}-export
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+          COMPONENT ${PROJECT_NAME}-runtime
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+          COMPONENT ${PROJECT_NAME}-runtime
+          NAMELINK_COMPONENT ${PROJECT_NAME}-development
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+          COMPONENT ${PROJECT_NAME}-development
+  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+          COMPONENT ${PROJECT_NAME}-development
+)
+
+install(EXPORT ${PROJECT_NAME}-export
+  FILE ${PROJECT_NAME}-targets.cmake
+  NAMESPACE ${PROJECT_NAME}::
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake"
+  COMPATIBILITY SameMajorVersion
+)
+
+install(FILES
+  ${PROJECT_NAME}-config.cmake
+  ${PROJECT_NAME}-config-version.cmake
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
